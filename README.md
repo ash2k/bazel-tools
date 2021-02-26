@@ -23,6 +23,7 @@ For bigger changes, make sure you start a discussion first by creating an issue 
 ## License
 
 Copyright (c) 2018-2020 Atlassian and others.
+
 Copyright (c) 2020-2021 Mikhail Mazurskiy.
 
 Apache 2.0 licensed, see LICENSE file.
