@@ -45,7 +45,7 @@ type command struct {
 
 type instructions struct {
 	Commands []command `json:"commands"`
-	Parallel bool      `json:"parallel"`
+	Jobs     int       `json:"jobs"`
 	Quiet    bool      `json:"quiet"`
 }
 
@@ -76,7 +76,7 @@ func (a arguments) run(ctx context.Context) (int, error) {
 		stdoutSink: os.Stdout,
 		stderrSink: os.Stderr,
 		args:       a.args,
-		parallel:   instr.Parallel,
+		jobs:       instr.Jobs,
 		quiet:      instr.Quiet,
 	}
 	err = m.run(ctx)

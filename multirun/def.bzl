@@ -60,9 +60,28 @@ def _multirun_impl(ctx):
             tag = tag,
             path = exe.short_path,
         ))
+
+    if ctx.attr.jobs < 0:
+       fail("'jobs' attribute should be at least 0")
+
+    jobs = ctx.attr.jobs
+    if ctx.attr.parallel:
+       print("'parallel' attribute is deprecated. Please use attribute 'jobs' instead.")
+       if ctx.attr.jobs == 1:
+          # If jobs is set at default value while parallel
+          # is NOT set at default value, then we should respect
+          # parallel to ensure backwards compatibility.
+          jobs = 0
+       else:
+          # When both parallel and jobs are set to a non-default value,
+          #   parallel == True
+          #   jobs != 1
+          # hard fail and ask user to only use 'jobs'.
+          fail("using both 'parallel' and 'jobs' is not supported. Please use only attribute 'jobs' instead.")
+
     instructions = struct(
         commands = commands,
-        parallel = ctx.attr.parallel,
+        jobs = jobs,
         quiet = ctx.attr.quiet,
     )
     ctx.actions.write(
@@ -104,9 +123,13 @@ _multirun = rule(
             doc = "Labeled targets to run",
             cfg = "target",
         ),
+        "jobs": attr.int(
+            default = 1,
+            doc = "The expected concurrency of targets to be executed. Default is set to 1 which means sequential execution. Setting to 0 means that there is no limit concurrency (same with parallel=True).",
+        ),
         "parallel": attr.bool(
             default = False,
-            doc = "If true, targets will be run in parallel, not in the specified order",
+            doc = "Deprecated, please use 'jobs' instad.If true, targets will be run in parallel, not in the specified order",
         ),
         "quiet": attr.bool(
             default = False,
