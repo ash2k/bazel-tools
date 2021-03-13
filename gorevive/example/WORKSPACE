@@ -1,7 +1,7 @@
 workspace(name = "revive_example")
 
 local_repository(
-    name = "com_github_atlassian_bazel_tools",
+    name = "com_github_ash2k_bazel_tools",
     path = "../..",
 )
 
@@ -29,6 +29,6 @@ go_register_toolchains()
 gazelle_dependencies()
 
 # Load go_revive_dependencies Bazel rule.
-load("@com_github_atlassian_bazel_tools//gorevive:deps.bzl", "go_revive_dependencies")
+load("@com_github_ash2k_bazel_tools//gorevive:deps.bzl", "go_revive_dependencies")
 
 go_revive_dependencies()

@@ -17,16 +17,17 @@ http_archive(
 )
 
 git_repository(
-    name = "com_github_atlassian_bazel_tools",
+    name = "com_github_ash2k_bazel_tools",
     commit = "<commit>",
-    remote = "https://github.com/atlassian/bazel-tools.git",
+    remote = "https://github.com/ash2k/bazel-tools.git",
     shallow_since = "<bla>",
 )
 ```
 
 `BUILD.bazel` file:
+
 ```bzl
-load("@com_github_atlassian_bazel_tools//file_hash:def.bzl", "file_hash")
+load("@com_github_ash2k_bazel_tools//file_hash:def.bzl", "file_hash")
 
 file_hash(
     name = "something_sha256",

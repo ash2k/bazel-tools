@@ -7,6 +7,7 @@ See the [official readme](https://github.com/bazelbuild/buildtools/tree/master/b
 You can invoke buildozer via the Bazel rule.
 
 `WORKSPACE` file:
+
 ```bzl
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
@@ -18,9 +19,9 @@ http_archive(
 )
 
 git_repository(
-    name = "com_github_atlassian_bazel_tools",
+    name = "com_github_ash2k_bazel_tools",
     commit = "<commit>",
-    remote = "https://github.com/atlassian/bazel-tools.git",
+    remote = "https://github.com/ash2k/bazel-tools.git",
     shallow_since = "<bla>",
 )
 
@@ -31,7 +32,7 @@ git_repository(
     shallow_since = "1576187991 -0800",
 )
 
-load("@com_github_atlassian_bazel_tools//buildozer:deps.bzl", "buildozer_dependencies")
+load("@com_github_ash2k_bazel_tools//buildozer:deps.bzl", "buildozer_dependencies")
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 
 buildozer_dependencies()
@@ -40,15 +41,18 @@ protobuf_deps()
 ```
 
 `BUILD.bazel` typically in the workspace root:
+
 ```bzl
-load("@com_github_atlassian_bazel_tools//buildozer:def.bzl", "buildozer")
+load("@com_github_ash2k_bazel_tools//buildozer:def.bzl", "buildozer")
 
 buildozer(
     name = "buildozer",
     commands = "//:buildozer_commands.txt",
 )
 ```
+
 Invoke with
+
 ```bash
 bazel run //:buildozer
 ```
@@ -59,5 +63,5 @@ bazel run //:buildozer
 
 ## Contributor notes
 
-* After updating the `_buildozer` rule's inline documentation, you should run
+- After updating the `_buildozer` rule's inline documentation, you should run
   `make buildzer/docs` from the repository root.

@@ -43,7 +43,7 @@ file_hash = rule(
             default = True,
         ),
         "_hasher": attr.label(
-            default = "@com_github_atlassian_bazel_tools//file_hash",
+            default = "@com_github_ash2k_bazel_tools//file_hash",
             cfg = "host",
             executable = True,
         ),

@@ -1,4 +1,4 @@
-load("@com_github_atlassian_bazel_tools//multirun:def.bzl", "command", "multirun")
+load("@com_github_ash2k_bazel_tools//multirun:def.bzl", "command", "multirun")
 
 sh_test(
     name = "test_command_env",

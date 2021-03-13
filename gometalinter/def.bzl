@@ -54,15 +54,15 @@ _gometalinter = rule(
         ),
         "prefix": attr.string(
             mandatory = True,
-            doc = "Go import path of this project i.e. where in GOPATH you would put it. E.g. github.com/atlassian/bazel-tools",
+            doc = "Go import path of this project i.e. where in GOPATH you would put it. E.g. github.com/ash2k/bazel-tools",
         ),
         "_gometalinter": attr.label(
-            default = "@com_github_atlassian_bazel_tools_gometalinter//:linter",
+            default = "@com_github_ash2k_bazel_tools_gometalinter//:linter",
             cfg = "host",
             executable = True,
         ),
         "_runner": attr.label(
-            default = "@com_github_atlassian_bazel_tools//gometalinter:runner.bash.template",
+            default = "@com_github_ash2k_bazel_tools//gometalinter:runner.bash.template",
             allow_single_file = True,
         ),
         "_go_sdk": attr.label(

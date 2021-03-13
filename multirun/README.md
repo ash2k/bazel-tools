@@ -5,6 +5,7 @@ Bazel rule to `bazel run` multiple executable targets sequentially or in paralle
 ## Setup and usage via Bazel
 
 `WORKSPACE` file:
+
 ```bzl
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
@@ -16,20 +17,21 @@ http_archive(
 )
 
 git_repository(
-    name = "com_github_atlassian_bazel_tools",
+    name = "com_github_ash2k_bazel_tools",
     commit = "<commit>",
-    remote = "https://github.com/atlassian/bazel-tools.git",
+    remote = "https://github.com/ash2k/bazel-tools.git",
     shallow_since = "<bla>",
 )
 
-load("@com_github_atlassian_bazel_tools//multirun:deps.bzl", "multirun_dependencies")
+load("@com_github_ash2k_bazel_tools//multirun:deps.bzl", "multirun_dependencies")
 
 multirun_dependencies()
 ```
 
 `BUILD.bazel` file:
+
 ```bzl
-load("@com_github_atlassian_bazel_tools//multirun:def.bzl", "multirun", "command")
+load("@com_github_ash2k_bazel_tools//multirun:def.bzl", "multirun", "command")
 
 command(
     name = "command1",
@@ -64,7 +66,9 @@ multirun(
     parallel = True,
 )
 ```
+
 Invoke with
+
 ```bash
 bazel run //:run_all
 ```

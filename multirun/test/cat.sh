@@ -12,4 +12,4 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 # --- end runfiles.bash initialization v2 ---
 
 cat "$1"
-cat "$(rlocation com_github_atlassian_bazel_tools/multirun/test/cat2.txt)"
+cat "$(rlocation com_github_ash2k_bazel_tools/multirun/test/cat2.txt)"

@@ -139,7 +139,7 @@ _multirun = rule(
             default = Label("@bazel_tools//tools/bash/runfiles"),
         ),
         "_runner": attr.label(
-            default = Label("@com_github_atlassian_bazel_tools//multirun"),
+            default = Label("@com_github_ash2k_bazel_tools//multirun"),
             cfg = "host",
             executable = True,
         ),

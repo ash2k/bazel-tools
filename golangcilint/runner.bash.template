@@ -16,7 +16,7 @@ ln -snf\
 DIRECTORY="$(pwd -P)"
 NEW_GOPATH="${DIRECTORY}"
 NEW_GOROOT="${DIRECTORY}/${NEW_GOROOT}"
-NEW_PATH="${NEW_GOPATH}/external/com_github_atlassian_bazel_tools_golangcilint:${NEW_GOROOT}/bin:${PATH}"
+NEW_PATH="${NEW_GOPATH}/external/com_github_ash2k_bazel_tools_golangcilint:${NEW_GOROOT}/bin:${PATH}"
 GOCACHE="$(mktemp -d)"
 trap "rm -rf '${GOCACHE}'" EXIT
 
