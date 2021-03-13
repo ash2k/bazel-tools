@@ -93,7 +93,7 @@ _attributes = {
         default = "}}",
     ),
     "_gotemplate": attr.label(
-        default = "@com_github_atlassian_bazel_tools//gotemplate",
+        default = "@com_github_ash2k_bazel_tools//gotemplate",
         cfg = "host",
         executable = True,
     ),

@@ -14,7 +14,7 @@ ln -snf "$BUILD_WORKSPACE_DIRECTORY" "src/$PREFIX_DIR_PATH/$PREFIX_BASE_NAME"
 DIRECTORY="$(pwd -P)"
 NEW_GOPATH="$DIRECTORY"
 NEW_GOROOT="$DIRECTORY/$NEW_GOROOT"
-NEW_PATH="$NEW_GOPATH/external/com_github_atlassian_bazel_tools_gometalinter:$NEW_GOROOT/bin:$PATH"
+NEW_PATH="$NEW_GOPATH/external/com_github_ash2k_bazel_tools_gometalinter:$NEW_GOROOT/bin:$PATH"
 
 gometalinter_short_path=$(readlink "$GOMETALINTER_SHORT_PATH")
 CURDIR="$NEW_GOPATH/src/$PREFIX_DIR_PATH/$PREFIX_BASE_NAME"

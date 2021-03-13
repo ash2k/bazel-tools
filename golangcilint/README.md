@@ -5,6 +5,7 @@ Bazel rule for [golangci-lint](https://github.com/golangci/golangci-lint).
 ## Limitations
 
 This rule does not work with:
+
 - generated Go code
 - with Bazel-managed Go dependencies
 - with Go modules, unless `go mod vendor` is used
@@ -16,6 +17,7 @@ Consider using [`nogo`](https://github.com/bazelbuild/rules_go/blob/master/go/no
 You can invoke golangcilint via the Bazel rule.
 
 `WORKSPACE` file:
+
 ```bzl
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
@@ -27,20 +29,21 @@ http_archive(
 )
 
 git_repository(
-    name = "com_github_atlassian_bazel_tools",
+    name = "com_github_ash2k_bazel_tools",
     commit = "<commit>",
-    remote = "https://github.com/atlassian/bazel-tools.git",
+    remote = "https://github.com/ash2k/bazel-tools.git",
     shallow_since = "<bla>",
 )
 
-load("@com_github_atlassian_bazel_tools//golangcilint:deps.bzl", "golangcilint_dependencies")
+load("@com_github_ash2k_bazel_tools//golangcilint:deps.bzl", "golangcilint_dependencies")
 
 golangcilint_dependencies()
 ```
 
 `BUILD.bazel` typically in the workspace root:
+
 ```bzl
-load("@com_github_atlassian_bazel_tools//golangcilint:def.bzl", "golangcilint")
+load("@com_github_ash2k_bazel_tools//golangcilint:def.bzl", "golangcilint")
 
 golangcilint(
     name = "golangcilint",
@@ -53,7 +56,9 @@ golangcilint(
     prefix = "bitbucket.org/<my>/<project>",
 )
 ```
+
 Invoke with
+
 ```bash
 bazel run //:golangcilint
 ```

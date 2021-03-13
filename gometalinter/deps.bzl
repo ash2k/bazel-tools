@@ -29,7 +29,7 @@ def _gometalinter_download_impl(ctx):
 
     ctx.template(
         "BUILD.bazel",
-        Label("@com_github_atlassian_bazel_tools//gometalinter:gometalinter.build.bazel"),
+        Label("@com_github_ash2k_bazel_tools//gometalinter:gometalinter.build.bazel"),
         executable = False,
     )
     ctx.download_and_extract(
@@ -53,5 +53,5 @@ def gometalinter_dependencies():
         sha256 = "97e70364e9249702246c0e9444bccdc4b847bed1eb03c5a3ece4f83dfe6abc44",
     )
     _gometalinter_download(
-        name = "com_github_atlassian_bazel_tools_gometalinter",
+        name = "com_github_ash2k_bazel_tools_gometalinter",
     )

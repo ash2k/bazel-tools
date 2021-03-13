@@ -5,6 +5,7 @@ Bazel rule for [`rjsone`](https://github.com/wryun/rjsone).
 ## Setup and usage via Bazel
 
 `WORKSPACE` file:
+
 ```bzl
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
@@ -20,20 +21,21 @@ http_archive(
 )
 
 git_repository(
-    name = "com_github_atlassian_bazel_tools",
+    name = "com_github_ash2k_bazel_tools",
     commit = "<commit>",
-    remote = "https://github.com/atlassian/bazel-tools.git",
+    remote = "https://github.com/ash2k/bazel-tools.git",
     shallow_since = "<bla>",
 )
 
-load("@com_github_atlassian_bazel_tools//:rjsone/deps.bzl", "rjsone_dependencies")
+load("@com_github_ash2k_bazel_tools//:rjsone/deps.bzl", "rjsone_dependencies")
 
 rjsone_dependencies()
 ```
 
 `BUILD.bazel` file:
+
 ```bzl
-load("@com_github_atlassian_bazel_tools//:rjsone/def.bzl", "rjsone")
+load("@com_github_ash2k_bazel_tools//:rjsone/def.bzl", "rjsone")
 
 filegroup(
     name = "list",
@@ -56,11 +58,14 @@ rjsone(
     template = "template_bazel.yaml",
 )
 ```
+
 Rule has two predeclared outputs: `{name}.yaml` and `{name}.json`. You may depend on one or the other depending on
 whether you want to get output as YAML or JSON.
+
 ```console
 bazel build //:example1 # builds both
 bazel build //:example1.yaml
 bazel build //:example1.json
 ```
+
 Not all rjsone features are supported right now.

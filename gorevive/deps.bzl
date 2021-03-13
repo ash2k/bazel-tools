@@ -96,5 +96,5 @@ def go_revive_dependencies():
         name = "com_github_mgechev_revive",
         commit = "b4cc152955fbbcd2afafd5df3d46393d621a7fdf",
         remote = "https://github.com/mgechev/revive.git",
-        build_file = "@com_github_atlassian_bazel_tools//gorevive:revive.BUILD.bazel",
+        build_file = "@com_github_ash2k_bazel_tools//gorevive:revive.BUILD.bazel",
     )

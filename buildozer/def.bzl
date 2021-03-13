@@ -106,7 +106,7 @@ _buildozer = rule(
             executable = True,
         ),
         "_runner": attr.label(
-            default = "@com_github_atlassian_bazel_tools//buildozer:runner.bash.template",
+            default = "@com_github_ash2k_bazel_tools//buildozer:runner.bash.template",
             allow_single_file = True,
         ),
     },

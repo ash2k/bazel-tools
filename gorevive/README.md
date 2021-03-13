@@ -13,6 +13,7 @@ directory files and can be used in a CI tool to check the code style.
 ## Limitations
 
 This rule does not work with:
+
 - generated Go code
 - with Bazel-managed Go dependencies
 - with Go modules, unless `go mod vendor` is used
@@ -24,6 +25,7 @@ Consider using [`nogo`](https://github.com/bazelbuild/rules_go/blob/master/go/no
 You can invoke revive via the Bazel rule.
 
 `WORKSPACE` file:
+
 ```bzl
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
@@ -41,19 +43,20 @@ http_archive(
 )
 
 git_repository(
-    name = "com_github_atlassian_bazel_tools",
+    name = "com_github_ash2k_bazel_tools",
     commit = "<commit>",
-    remote = "https://github.com/atlassian/bazel-tools.git",
+    remote = "https://github.com/ash2k/bazel-tools.git",
     shallow_since = "<bla>",
 )
 
 # Load go_revive_dependencies Bazel rule.
-load("@com_github_atlassian_bazel_tools//gorevive:deps.bzl", "go_revive_dependencies")
+load("@com_github_ash2k_bazel_tools//gorevive:deps.bzl", "go_revive_dependencies")
 
 go_revive_dependencies()
 ```
 
 `BUILD.bazel`:
+
 ```bzl
 # A simple rule to make the config file available for Bazel rules.
 exports_files(["defaults.toml"])
@@ -65,7 +68,7 @@ filegroup(
     visibility = ["//visibility:private"],
 )
 
-load("@com_github_atlassian_bazel_tools//gorevive:def.bzl", "go_revive_test")
+load("@com_github_ash2k_bazel_tools//gorevive:def.bzl", "go_revive_test")
 
 go_revive_test(
     name = "revive_test",

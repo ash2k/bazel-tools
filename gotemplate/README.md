@@ -21,13 +21,13 @@ http_archive(
 )
 
 git_repository(
-    name = "com_github_atlassian_bazel_tools",
+    name = "com_github_ash2k_bazel_tools",
     commit = "<commit>",
-    remote = "https://github.com/atlassian/bazel-tools.git",
+    remote = "https://github.com/ash2k/bazel-tools.git",
     shallow_since = "<bla>",
 )
 
-load("@com_github_atlassian_bazel_tools//gotemplate:deps.bzl", "gotemplate_dependencies")
+load("@com_github_ash2k_bazel_tools//gotemplate:deps.bzl", "gotemplate_dependencies")
 
 gotemplate_dependencies()
 ```
@@ -35,8 +35,9 @@ gotemplate_dependencies()
 ### Simple templating
 
 `BUILD.bazel` file:
+
 ```bzl
-load("@com_github_atlassian_bazel_tools//gotemplate:def.bzl", "gotemplate")
+load("@com_github_ash2k_bazel_tools//gotemplate:def.bzl", "gotemplate")
 
 gotemplate(
     name = "something",
@@ -49,23 +50,32 @@ gotemplate(
 ```
 
 `some-template.txt`:
+
 ```text
 bla bla bla
 {{ .one.a }} {{ .two }}
 ```
+
 `some.ctx1.yaml`:
+
 ```yaml
 a: 1
 ```
+
 `some.ctx2.yaml`:
+
 ```yaml
 b: 2
 ```
+
 To run this example execute:
+
 ```console
 bazel build :something
 ```
+
 Output file will contain:
+
 ```text
 bla bla bla
 1 map[b:2]
@@ -76,8 +86,9 @@ bla bla bla
 You can build executable files using `gotemplate_exec` rule.
 
 `BUILD.bazel` file:
+
 ```bzl
-load("@com_github_atlassian_bazel_tools//gotemplate:def.bzl", "gotemplate_exec")
+load("@com_github_ash2k_bazel_tools//gotemplate:def.bzl", "gotemplate_exec")
 
 gotemplate_exec(
     name = "something-else.bash",
@@ -90,16 +101,21 @@ gotemplate_exec(
 ```
 
 `some-executable-template.bash`:
+
 ```text
 #!/usr/bin/env bash
 
 echo '{{ .one.a }} {{ .two }}'
 ```
+
 To run this example execute:
+
 ```console
 bazel run :something-else.bash
 ```
+
 Output file will contain:
+
 ```text
 1 map[b:2]
 ```

@@ -42,7 +42,7 @@ def _golangcilint_download_impl(ctx):
 
     ctx.template(
         "BUILD.bazel",
-        Label("@com_github_atlassian_bazel_tools//golangcilint:golangcilint.build.bazel"),
+        Label("@com_github_ash2k_bazel_tools//golangcilint:golangcilint.build.bazel"),
         executable = False,
     )
     ctx.download_and_extract(
@@ -66,5 +66,5 @@ def golangcilint_dependencies():
         sha256 = "97e70364e9249702246c0e9444bccdc4b847bed1eb03c5a3ece4f83dfe6abc44",
     )
     _golangcilint_download(
-        name = "com_github_atlassian_bazel_tools_golangcilint",
+        name = "com_github_ash2k_bazel_tools_golangcilint",
     )

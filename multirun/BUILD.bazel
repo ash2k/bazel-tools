@@ -7,7 +7,7 @@ go_library(
         "multirun.go",
         "process.go",
     ],
-    importpath = "github.com/atlassian/bazel-tools/multirun",
+    importpath = "github.com/ash2k/bazel-tools/multirun",
     visibility = ["//visibility:private"],
 )
 
