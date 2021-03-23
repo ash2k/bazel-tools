@@ -1,7 +1,9 @@
 load("@bazel_skylib//lib:shell.bzl", "shell")
 load("@bazel_skylib//lib:paths.bzl", "paths")
+load("@io_bazel_rules_go//go:def.bzl", "go_context")
 
 def _goimports_impl(ctx):
+    go = go_context(ctx)
     # That way we don't depend on defaults encoded in the binary but always
     # use defaults set on attributes of the rule
     args = [
@@ -29,6 +31,7 @@ def _goimports_impl(ctx):
         "@@PREFIX_BASE_NAME@@": shell.quote(paths.basename(ctx.attr.prefix)),
         "@@ARGS@@": shell.array_literal(args),
         "@@GOIMPORTS_SHORT_PATH@@": shell.quote(ctx.executable._goimports.short_path),
+        "@@GO_SHORT_PATH@@": shell.quote(go.go.short_path),
         "@@EXCLUDE_PATHS@@": exclude_paths_str,
         "@@EXCLUDE_FILES@@": exclude_files_str,
     }
@@ -38,7 +41,7 @@ def _goimports_impl(ctx):
         substitutions = substitutions,
         is_executable = True,
     )
-    runfiles = ctx.runfiles(files = [ctx.executable._goimports])
+    runfiles = ctx.runfiles(files = [ctx.executable._goimports, go.go])
     return [DefaultInfo(
         files = depset([out_file]),
         runfiles = runfiles,
@@ -63,6 +66,9 @@ _goimports = rule(
         ),
         "display_diffs": attr.bool(
             doc = "Display diffs instead of rewriting files",
+        ),
+        "_go_context_data": attr.label(
+            default = "@io_bazel_rules_go//:go_context_data",
         ),
         "report_all_errors": attr.bool(
             doc = "Report all errors (not just the first 10 on different lines)",
@@ -89,6 +95,7 @@ _goimports = rule(
             allow_single_file = True,
         ),
     },
+    toolchains = ["@io_bazel_rules_go//go:toolchain"],
     executable = True,
 )
 
