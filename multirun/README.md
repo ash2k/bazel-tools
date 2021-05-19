@@ -63,7 +63,7 @@ multirun(
         ":command1",
         "//some/other:label",
     ],
-    parallel = True,
+    jobs = 0,
 )
 ```
 
