@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"sync"
 )
 
 type multirun struct {
@@ -29,6 +30,8 @@ func (m multirun) run(ctx context.Context) error {
 
 // unboundedExecution execute multiple commands without concurrency limit
 func (m multirun) unboundedExecution(ctx context.Context) error {
+	ctx, cancel := context.WithCancel(ctx)
+	defer cancel()
 	errs := make(chan error)
 
 	for _, cmd := range m.commands {
@@ -48,7 +51,9 @@ func (m multirun) unboundedExecution(ctx context.Context) error {
 
 	var firstError error
 	for range m.commands {
-		if err := <-errs; firstError == nil {
+		err := <-errs
+		if err != nil && firstError == nil {
+			cancel()
 			firstError = err
 		}
 	}
@@ -58,15 +63,12 @@ func (m multirun) unboundedExecution(ctx context.Context) error {
 
 // boundedExecution execute multiple commands using a sized worker pool
 func (m multirun) boundedExecution(ctx context.Context) error {
+	ctx, cancel := context.WithCancel(ctx)
+	defer cancel()
 	// errs should be buffered to avoid blocking
 	// when len(m.commands) > m.jobs
 	errs := make(chan error, len(m.commands))
-	commands := make(chan command)
-
-	// start worker pool
-	for w := 0; w < m.jobs; w++ {
-		go m.spawnWorker(ctx, commands, errs)
-	}
+	commands := make(chan command, len(m.commands))
 
 	// send command to worker pool
 	for _, cmd := range m.commands {
@@ -74,18 +76,37 @@ func (m multirun) boundedExecution(ctx context.Context) error {
 	}
 	close(commands)
 
-	var firstError error
-	for range m.commands {
-		if err := <-errs; firstError == nil {
-			firstError = err
-		}
+	// start worker pool
+	var wg sync.WaitGroup
+	wg.Add(m.jobs)
+	for w := 0; w < m.jobs; w++ {
+		go func() {
+			defer wg.Done()
+			err := m.spawnWorker(ctx, commands)
+			if err != nil {
+				errs <- err // first error must go first, cancel after it has been sent.
+				cancel()
+			}
+		}()
 	}
 
-	return firstError
+	wg.Wait()
+	close(errs)
+
+	for err := range errs {
+		return err
+	}
+
+	return nil
 }
 
-func (m multirun) spawnWorker(ctx context.Context, commands <-chan command, errs chan<- error) {
+func (m multirun) spawnWorker(ctx context.Context, commands <-chan command) error {
 	for cmd := range commands {
+		select {
+		case <-ctx.Done():
+			return ctx.Err()
+		default:
+		}
 		p := process{
 			tag:        cmd.Tag,
 			path:       cmd.Path,
@@ -103,6 +124,10 @@ func (m multirun) spawnWorker(ctx context.Context, commands <-chan command, errs
 			fmt.Fprintf(m.stderrSink, "Running %s\n", cmd.Tag)
 		}
 
-		errs <- p.run(ctx)
+		err := p.run(ctx)
+		if err != nil {
+			return err
+		}
 	}
+	return nil
 }

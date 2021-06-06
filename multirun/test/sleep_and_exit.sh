@@ -2,4 +2,5 @@
 
 echo "sleeping before exiting $1"
 sleep "$1"
-echo "exiting"
+echo "exiting: $2"
+exit "$2"
