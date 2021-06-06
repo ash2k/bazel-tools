@@ -130,12 +130,12 @@ multirun(
         ":command_echo_2",
         ":command_echo_1",
     ],
-    parallel = True,
+    jobs = 0,
 )
 
 multirun(
     name = "multirun_parallel_tagged_success",
-    parallel = True,
+    jobs = 0,
     tagged_commands = {
         ":command_echo_2": "echo-2",
         ":command_echo_1": "echo-1",
@@ -182,10 +182,10 @@ multirun(
     name = "multirun_parallel_failure",
     commands = [
         ":command_echo_2",
-        ":command_exit",
-        ":command_echo_3",
+        ":command_sleep_and_exit_0",
+        ":command_sleep_and_exit_5",
     ],
-    parallel = True,
+    jobs = 0,
 )
 
 command(
@@ -269,22 +269,30 @@ sh_binary(
 multirun(
     name = "multirun_signal_handling",
     commands = [
-        ":command_sleep_and_exit",
+        ":command_sleep_and_exit_0",
     ],
 )
 
 multirun(
     name = "multirun_parallel_signal_handling",
     commands = [
-        ":command_sleep_and_exit",
+        ":command_sleep_and_exit_0",
     ],
-    parallel = True,
+    jobs = 0,
 )
 
 command(
-    name = "command_sleep_and_exit",
+    name = "command_sleep_and_exit_0",
     arguments = [
-        "4",
+        "4", "0",
+    ],
+    command = ":sleep_and_exit",
+)
+
+command(
+    name = "command_sleep_and_exit_5",
+    arguments = [
+        "1", "5",
     ],
     command = ":sleep_and_exit",
 )
