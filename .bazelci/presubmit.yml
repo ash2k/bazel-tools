@@ -1,11 +1,26 @@
 ---
 tasks:
+  centos7:
+    test_targets:
+      - "..."
   ubuntu1604:
     test_targets:
       - "..."
   ubuntu1804:
     test_targets:
       - "..."
+  ubuntu1804_clang:
+    platform: ubuntu1804
+    environment:
+      CC: clang
+    test_targets:
+      - "..."
+  ubuntu2004:
+    test_targets:
+      - "..."
   macos:
+    test_targets:
+      - "..."
+  kythe_ubuntu2004:
     test_targets:
       - "..."
