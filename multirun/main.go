@@ -47,6 +47,7 @@ type instructions struct {
 	Commands []command `json:"commands"`
 	Jobs     int       `json:"jobs"`
 	Quiet    bool      `json:"quiet"`
+	AddTag   bool      `json:"addTag"`
 }
 
 type arguments struct {
@@ -78,6 +79,7 @@ func (a arguments) run(ctx context.Context) (int, error) {
 		args:       a.args,
 		jobs:       instr.Jobs,
 		quiet:      instr.Quiet,
+		addTag:     instr.AddTag,
 	}
 	err = m.run(ctx)
 	if err != nil {

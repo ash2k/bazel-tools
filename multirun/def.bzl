@@ -83,6 +83,7 @@ def _multirun_impl(ctx):
         commands = commands,
         jobs = jobs,
         quiet = ctx.attr.quiet,
+        addTag = ctx.attr.add_tag,
     )
     ctx.actions.write(
         output = instructions_file,
@@ -130,6 +131,10 @@ _multirun = rule(
         "parallel": attr.bool(
             default = False,
             doc = "Deprecated, please use 'jobs' instad.If true, targets will be run in parallel, not in the specified order",
+        ),
+        "add_tag": attr.bool(
+            default = True,
+            doc = "Include the tool in the output lines, only for parallel output",
         ),
         "quiet": attr.bool(
             default = False,
