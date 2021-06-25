@@ -13,6 +13,7 @@ type multirun struct {
 	args                   []string
 	jobs                   int
 	quiet                  bool
+	addTag                 bool
 }
 
 func (m multirun) run(ctx context.Context) error {
@@ -41,7 +42,7 @@ func (m multirun) unboundedExecution(ctx context.Context) error {
 			stdoutSink: m.stdoutSink,
 			stderrSink: m.stderrSink,
 			args:       m.args,
-			addTag:     true,
+			addTag:     m.addTag,
 		}
 
 		go func() {
@@ -117,7 +118,7 @@ func (m multirun) spawnWorker(ctx context.Context, commands <-chan command) erro
 
 		// when execute concurrently, tag should be added
 		if m.jobs > 1 {
-			p.addTag = true
+			p.addTag = m.addTag
 		}
 
 		if !m.quiet {

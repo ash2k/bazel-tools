@@ -75,6 +75,22 @@ sh_test(
 )
 
 sh_test(
+    name = "test_multirun_no_tag",
+    srcs = ["test_compare_content.sh"],
+    args = [
+        # Sort the output for deterministic comparison; order doesn't matter as long as all the expected lines are
+        # there.
+        "'$(location :multirun_parallel_no_tag) | sort'",
+        "0",
+        "$(location expected_parallel_no_tag.txt)",
+    ],
+    data = [
+        "expected_parallel_no_tag.txt",
+        ":multirun_parallel_no_tag",
+    ],
+)
+
+sh_test(
     name = "test_multirun_parallel_tagged_success",
     srcs = ["test_compare_content.sh"],
     args = [
@@ -126,6 +142,16 @@ multirun(
 
 multirun(
     name = "multirun_parallel_success",
+    commands = [
+        ":command_echo_2",
+        ":command_echo_1",
+    ],
+    jobs = 0,
+)
+
+multirun(
+    name = "multirun_parallel_no_tag",
+    add_tag = False,
     commands = [
         ":command_echo_2",
         ":command_echo_1",
