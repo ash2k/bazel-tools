@@ -14,6 +14,7 @@ type multirun struct {
 	jobs                   int
 	quiet                  bool
 	addTag                 bool
+	stopOnError            bool
 }
 
 func (m multirun) run(ctx context.Context) error {
@@ -54,7 +55,9 @@ func (m multirun) unboundedExecution(ctx context.Context) error {
 	for range m.commands {
 		err := <-errs
 		if err != nil && firstError == nil {
-			cancel()
+			if m.stopOnError {
+				cancel()
+			}
 			firstError = err
 		}
 	}
@@ -83,9 +86,7 @@ func (m multirun) boundedExecution(ctx context.Context) error {
 	for w := 0; w < m.jobs; w++ {
 		go func() {
 			defer wg.Done()
-			err := m.spawnWorker(ctx, commands)
-			if err != nil {
-				errs <- err // first error must go first, cancel after it has been sent.
+			if m.spawnWorker(ctx, commands, errs) && m.stopOnError {
 				cancel()
 			}
 		}()
@@ -101,11 +102,16 @@ func (m multirun) boundedExecution(ctx context.Context) error {
 	return nil
 }
 
-func (m multirun) spawnWorker(ctx context.Context, commands <-chan command) error {
+// spawnWorker spawns a worker node that executes commands from the commands channel.
+//
+// All errors that occur will be pushed into the `errs` channel and `true` will be returned.
+// If no errors occur, function returns `false`.
+func (m multirun) spawnWorker(ctx context.Context, commands <-chan command, errs chan<- error) bool {
 	for cmd := range commands {
 		select {
 		case <-ctx.Done():
-			return ctx.Err()
+			errs <- ctx.Err()
+			return true
 		default:
 		}
 		p := process{
@@ -127,8 +133,11 @@ func (m multirun) spawnWorker(ctx context.Context, commands <-chan command) erro
 
 		err := p.run(ctx)
 		if err != nil {
-			return err
+			errs <- err
+			if m.stopOnError {
+				return true
+			}
 		}
 	}
-	return nil
+	return false
 }

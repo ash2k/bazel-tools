@@ -84,6 +84,7 @@ def _multirun_impl(ctx):
         jobs = jobs,
         quiet = ctx.attr.quiet,
         addTag = ctx.attr.add_tag,
+        stopOnError = ctx.attr.stop_on_error,
     )
     ctx.actions.write(
         output = instructions_file,
@@ -139,6 +140,10 @@ _multirun = rule(
         "quiet": attr.bool(
             default = False,
             doc = "Limit output where possible",
+        ),
+        "stop_on_error": attr.bool(
+            default = True,
+            doc = "Stop the command chain when error occurs",
         ),
         "_bash_runfiles": attr.label(
             default = Label("@bazel_tools//tools/bash/runfiles"),

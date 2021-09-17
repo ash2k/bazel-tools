@@ -44,10 +44,11 @@ type command struct {
 }
 
 type instructions struct {
-	Commands []command `json:"commands"`
-	Jobs     int       `json:"jobs"`
-	Quiet    bool      `json:"quiet"`
-	AddTag   bool      `json:"addTag"`
+	Commands    []command `json:"commands"`
+	Jobs        int       `json:"jobs"`
+	Quiet       bool      `json:"quiet"`
+	AddTag      bool      `json:"addTag"`
+	StopOnError bool      `json:"stopOnError"`
 }
 
 type arguments struct {
@@ -73,13 +74,14 @@ func (a arguments) run(ctx context.Context) (int, error) {
 		return 0, err
 	}
 	m := multirun{
-		commands:   instr.Commands,
-		stdoutSink: os.Stdout,
-		stderrSink: os.Stderr,
-		args:       a.args,
-		jobs:       instr.Jobs,
-		quiet:      instr.Quiet,
-		addTag:     instr.AddTag,
+		commands:    instr.Commands,
+		stdoutSink:  os.Stdout,
+		stderrSink:  os.Stderr,
+		args:        a.args,
+		jobs:        instr.Jobs,
+		quiet:       instr.Quiet,
+		addTag:      instr.AddTag,
+		stopOnError: instr.StopOnError,
 	}
 	err = m.run(ctx)
 	if err != nil {
