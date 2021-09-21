@@ -1,11 +1,5 @@
 ---
 tasks:
-  centos7:
-    test_targets:
-      - "..."
-  ubuntu1604:
-    test_targets:
-      - "..."
   ubuntu1804:
     test_targets:
       - "..."
