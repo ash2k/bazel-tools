@@ -53,7 +53,7 @@ load("//gotemplate:deps.bzl", "gotemplate_dependencies")
 
 go_rules_dependencies()
 
-go_register_toolchains("1.17.6")
+go_register_toolchains("1.17.7")
 
 gazelle_dependencies()
 
