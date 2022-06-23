@@ -3,3 +3,4 @@
 /bazel-out
 /bazel-bazel-tools
 /bazel-testlogs
+/.idea
