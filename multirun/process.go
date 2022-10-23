@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"os"
 	"os/exec"
 	"sync"
 	"syscall"
@@ -27,6 +28,7 @@ func (p *process) run(ctx context.Context) error {
 		Args: append([]string{p.path}, p.args...),
 		// nil means "use environment of the parent process", see the godoc. We do this explicitly to show the intent.
 		Env: nil,
+		Stdin: os.Stdin,
 	}
 	var stdout, stderr io.ReadCloser
 	if p.addTag {
