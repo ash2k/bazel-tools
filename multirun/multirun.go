@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"os"
 	"sync"
 )
 
@@ -115,16 +116,23 @@ func (m multirun) spawnWorker(ctx context.Context, commands <-chan command, errs
 		default:
 		}
 		p := process{
-			tag:        cmd.Tag,
-			path:       cmd.Path,
+			tag:  cmd.Tag,
+			path: cmd.Path,
+			// nil means "the process reads from the null device (os.DevNull)", see the godoc. We do this explicitly to show the intent.
+			stdin:      nil,
 			stdoutSink: m.stdoutSink,
 			stderrSink: m.stderrSink,
 			args:       m.args,
 		}
 
-		// when execute concurrently, tag should be added
+		// when executing concurrently, tag should be added
 		if m.jobs > 1 {
 			p.addTag = m.addTag
+		}
+
+		// when executing sequentially, allow input from stdin
+		if m.jobs == 1 {
+			p.stdin = os.Stdin
 		}
 
 		if !m.quiet {
