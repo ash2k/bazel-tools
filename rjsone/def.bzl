@@ -155,7 +155,7 @@ rjsone = rule(
         ),
         "_rjsone": attr.label(
             default = "@com_github_wryun_rjsone//:rjsone",
-            cfg = "host",
+            cfg = "exec",
             executable = True,
         ),
     },

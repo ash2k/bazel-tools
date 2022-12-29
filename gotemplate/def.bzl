@@ -94,7 +94,7 @@ _attributes = {
     ),
     "_gotemplate": attr.label(
         default = "@com_github_ash2k_bazel_tools//gotemplate",
-        cfg = "host",
+        cfg = "exec",
         executable = True,
     ),
 }

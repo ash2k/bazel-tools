@@ -112,7 +112,7 @@ _multirun = rule(
             mandatory = False,
             allow_files = True,
             doc = "Targets to run",
-            cfg = "target",
+            cfg = "exec",
         ),
         "data": attr.label_list(
             doc = "The list of files needed by the commands at runtime. See general comments about `data` at https://docs.bazel.build/versions/master/be/common-definitions.html#common-attributes",
@@ -123,7 +123,7 @@ _multirun = rule(
             mandatory = False,
             allow_files = True,
             doc = "Labeled targets to run",
-            cfg = "target",
+            cfg = "exec",
         ),
         "jobs": attr.int(
             default = 1,
@@ -150,7 +150,7 @@ _multirun = rule(
         ),
         "_runner": attr.label(
             default = Label("@com_github_ash2k_bazel_tools//multirun"),
-            cfg = "host",
+            cfg = "exec",
             executable = True,
         ),
     },
@@ -230,7 +230,7 @@ _command = rule(
             allow_files = True,
             executable = True,
             doc = "Target to run",
-            cfg = "target",
+            cfg = "exec",
         ),
         "_bash_runfiles": attr.label(
             default = Label("@bazel_tools//tools/bash/runfiles"),

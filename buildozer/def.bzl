@@ -96,13 +96,13 @@ _buildozer = rule(
             doc = "Set to True for format on write using the -buildifier flag. If the `buildifier` attribute is empty, use the built-in formatter",
         ),
         "buildifier": attr.label(
-            cfg = "host",
+            cfg = "exec",
             executable = True,
             doc = "A label pointing to an executable buildifier output. Has no meaning unless `format_on_write` is True",
         ),
         "_buildozer": attr.label(
             default = "@com_github_bazelbuild_buildtools//buildozer",
-            cfg = "host",
+            cfg = "exec",
             executable = True,
         ),
         "_runner": attr.label(

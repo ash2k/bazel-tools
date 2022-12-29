@@ -58,7 +58,7 @@ _gometalinter = rule(
         ),
         "_gometalinter": attr.label(
             default = "@com_github_ash2k_bazel_tools_gometalinter//:linter",
-            cfg = "host",
+            cfg = "exec",
             executable = True,
         ),
         "_runner": attr.label(

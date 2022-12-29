@@ -88,7 +88,7 @@ _goimports = rule(
         ),
         "_goimports": attr.label(
             default = "@org_golang_x_tools//cmd/goimports",
-            cfg = "host",
+            cfg = "exec",
             executable = True,
         ),
         "_runner": attr.label(
