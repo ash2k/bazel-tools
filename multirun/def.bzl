@@ -62,22 +62,22 @@ def _multirun_impl(ctx):
         ))
 
     if ctx.attr.jobs < 0:
-       fail("'jobs' attribute should be at least 0")
+        fail("'jobs' attribute should be at least 0")
 
     jobs = ctx.attr.jobs
     if ctx.attr.parallel:
-       print("'parallel' attribute is deprecated. Please use attribute 'jobs' instead.")
-       if ctx.attr.jobs == 1:
-          # If jobs is set at default value while parallel
-          # is NOT set at default value, then we should respect
-          # parallel to ensure backwards compatibility.
-          jobs = 0
-       else:
-          # When both parallel and jobs are set to a non-default value,
-          #   parallel == True
-          #   jobs != 1
-          # hard fail and ask user to only use 'jobs'.
-          fail("using both 'parallel' and 'jobs' is not supported. Please use only attribute 'jobs' instead.")
+        print("'parallel' attribute is deprecated. Please use attribute 'jobs' instead.")
+        if ctx.attr.jobs == 1:
+            # If jobs is set at default value while parallel
+            # is NOT set at default value, then we should respect
+            # parallel to ensure backwards compatibility.
+            jobs = 0
+        else:
+            # When both parallel and jobs are set to a non-default value,
+            #   parallel == True
+            #   jobs != 1
+            # hard fail and ask user to only use 'jobs'.
+            fail("using both 'parallel' and 'jobs' is not supported. Please use only attribute 'jobs' instead.")
 
     instructions = struct(
         commands = commands,

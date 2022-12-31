@@ -6,17 +6,17 @@ def buildozer_dependencies():
     maybe(
         http_archive,
         name = "bazel_skylib",
+        sha256 = "74d544d96f4a5bb630d465ca8bbcfe231e3594e5aae57e1edbf17a6eb3ca2506",
         urls = [
-            "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.0.2/bazel-skylib-1.0.2.tar.gz",
-            "https://github.com/bazelbuild/bazel-skylib/releases/download/1.0.2/bazel-skylib-1.0.2.tar.gz",
+            "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.3.0/bazel-skylib-1.3.0.tar.gz",
+            "https://github.com/bazelbuild/bazel-skylib/releases/download/1.3.0/bazel-skylib-1.3.0.tar.gz",
         ],
-        sha256 = "97e70364e9249702246c0e9444bccdc4b847bed1eb03c5a3ece4f83dfe6abc44",
     )
 
     maybe(
         git_repository,
         name = "com_github_bazelbuild_buildtools",
-        commit = "5bcc31df55ec1de770cb52887f2e989e7068301f",  #v0.29.0
+        commit = "c802c3b06ba674e8a76d04c0677d153ab9f660c9",  #v5.1.0
         remote = "https://github.com/bazelbuild/buildtools.git",
-        shallow_since = "1568030193 +0200",
+        shallow_since = "1649877303 +0200",
     )
