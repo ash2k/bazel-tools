@@ -4,6 +4,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_context")
 
 def _goimports_impl(ctx):
     go = go_context(ctx)
+
     # That way we don't depend on defaults encoded in the binary but always
     # use defaults set on attributes of the rule
     args = [

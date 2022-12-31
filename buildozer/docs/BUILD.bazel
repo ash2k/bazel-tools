@@ -1,22 +1,14 @@
-load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
 load("@io_bazel_stardoc//stardoc:stardoc.bzl", "stardoc")
-
-bzl_library(
-    name = "buildozer_docs_library",
-    srcs = [
-        "@bazel_skylib//lib:shell.bzl",
-    ],
-)
 
 stardoc(
     name = "buildozer_rule_docs",
-    input = "//buildozer:def.bzl",
     out = "buildozer_rule.in.md",
-    deps = [
-        ":buildozer_docs_library",
-    ],
+    input = "//buildozer:def.bzl",
     symbol_names = [
         "_buildozer",
+    ],
+    deps = [
+        "@bazel_skylib//lib:shell",
     ],
 )
 

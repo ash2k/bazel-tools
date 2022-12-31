@@ -152,7 +152,6 @@ sh_test(
     ],
 )
 
-
 sh_binary(
     name = "exit",
     srcs = ["exit.sh"],
@@ -363,7 +362,8 @@ multirun(
 command(
     name = "command_sleep_and_exit_0",
     arguments = [
-        "4", "0",
+        "4",
+        "0",
     ],
     command = ":sleep_and_exit",
 )
@@ -371,7 +371,8 @@ command(
 command(
     name = "command_sleep_and_exit_2",
     arguments = [
-        "2", "2",
+        "2",
+        "2",
     ],
     command = ":sleep_and_exit",
 )
@@ -379,7 +380,8 @@ command(
 command(
     name = "command_sleep_and_exit_5",
     arguments = [
-        "1", "5",
+        "1",
+        "5",
     ],
     command = ":sleep_and_exit",
 )
