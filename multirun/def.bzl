@@ -150,7 +150,7 @@ _multirun = rule(
         ),
         "_runner": attr.label(
             default = Label("@com_github_ash2k_bazel_tools//multirun"),
-            cfg = "host",
+            cfg = "exec",
             executable = True,
         ),
     },

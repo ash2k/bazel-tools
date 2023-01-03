@@ -66,7 +66,7 @@ _golangcilint = rule(
         ),
         "_golangcilint": attr.label(
             default = "@com_github_ash2k_bazel_tools_golangcilint//:linter",
-            cfg = "host",
+            cfg = "exec",
             executable = True,
         ),
         "_runner": attr.label(

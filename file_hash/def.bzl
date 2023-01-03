@@ -44,7 +44,7 @@ file_hash = rule(
         ),
         "_hasher": attr.label(
             default = "@com_github_ash2k_bazel_tools//file_hash",
-            cfg = "host",
+            cfg = "exec",
             executable = True,
         ),
     },

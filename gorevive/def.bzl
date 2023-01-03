@@ -65,7 +65,7 @@ go_revive_test = rule(
         "_revive_executable": attr.label(
             default = "@com_github_mgechev_revive//:revive",
             executable = True,
-            cfg = "host",
+            cfg = "exec",
         ),
     },
     test = True,
