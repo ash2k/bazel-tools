@@ -12,9 +12,21 @@ tasks:
   ubuntu2004:
     test_targets:
       - "..."
+  ubuntu2204:
+    test_targets:
+      - "..."
   macos:
     test_targets:
       - "..."
+  macos_arm64:
+    test_targets:
+      - "..."
   kythe_ubuntu2004:
+    test_targets:
+      - "..."
+  kythe_ubuntu2204:
+    test_targets:
+      - "..."
+  fedora39:
     test_targets:
       - "..."
