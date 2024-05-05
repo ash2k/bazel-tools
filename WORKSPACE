@@ -1,7 +1,7 @@
 workspace(name = "com_github_ash2k_bazel_tools")
 
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "io_bazel_rules_go",
@@ -44,13 +44,12 @@ http_archive(
     ],
 )
 
-load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 load("@com_github_bazelbuild_buildtools//buildifier:deps.bzl", "buildifier_dependencies")
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
-load("//gotemplate:deps.bzl", "gotemplate_dependencies")
-
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 load("@io_bazel_stardoc//:setup.bzl", "stardoc_repositories")
+load("//gotemplate:deps.bzl", "gotemplate_dependencies")
 
 stardoc_repositories()
 
