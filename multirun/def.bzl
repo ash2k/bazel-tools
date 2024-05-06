@@ -157,13 +157,22 @@ _multirun = rule(
     executable = True,
 )
 
-def multirun(**kwargs):
+def multirun(name, **kwargs):
+    visibility = kwargs.get("visibility", None)
     tags = kwargs.get("tags", [])
     if "manual" not in tags:
         tags.append("manual")
         kwargs["tags"] = tags
+    script_name = name + "_script"
     _multirun(
+        name = script_name,
         **kwargs
+    )
+    native.sh_binary(
+        name = name,
+        srcs = [script_name],
+        tags = tags,
+        visibility = visibility,
     )
 
 def _command_impl(ctx):
@@ -239,11 +248,20 @@ _command = rule(
     executable = True,
 )
 
-def command(**kwargs):
+def command(name, **kwargs):
+    visibility = kwargs.get("visibility", None)
     tags = kwargs.get("tags", [])
     if "manual" not in tags:
         tags.append("manual")
         kwargs["tags"] = tags
+    script_name = name + "_script"
     _command(
+        name = script_name,
         **kwargs
+    )
+    native.sh_binary(
+        name = name,
+        srcs = [script_name],
+        tags = tags,
+        visibility = visibility,
     )
