@@ -4,6 +4,8 @@ Various reusable bits for the [Bazel build system](https://bazel.build/).
 
 See subdirectories for documentation.
 
+**ARCHIVED**. You can use forked,  Python-based `rules_multirun` [via BCR](https://registry.bazel.build/modules/rules_multirun).
+
 ## CI
 
 Our builds are part of the [Bazel ecosystem builds on Buildkite](https://buildkite.com/bazel/ash2k-bazel-tools).
